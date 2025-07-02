@@ -69,6 +69,7 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
+            //tight coupling
             CustomerDAOImpl customerDAO = new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomer=customerDAO.getAllCustomer();
             for (CustomerDTO customerDTO : allCustomer) {
@@ -147,13 +148,8 @@ public class ManageCustomersFormController {
                 if (existCustomer(id)) {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
-                Connection connection = DBConnection.getDbConnection().getConnection();
-                PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer (id,name, address) VALUES (?,?,?)");
-                pstm.setString(1, id);
-                pstm.setString(2, name);
-                pstm.setString(3, address);
-                pstm.executeUpdate();
-
+                CustomerDAOImpl customerDAO=new CustomerDAOImpl();
+                customerDAO.saveCustomer(id,name,address);
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
