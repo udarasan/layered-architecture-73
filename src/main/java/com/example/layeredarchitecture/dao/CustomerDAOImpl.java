@@ -60,4 +60,7 @@ public class CustomerDAOImpl {
             return "C00-001";
         }
     }
+    public void searchCustomer(){
+
+    }
 }
