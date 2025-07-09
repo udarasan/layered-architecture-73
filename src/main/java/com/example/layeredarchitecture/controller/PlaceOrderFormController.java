@@ -55,6 +55,12 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     private String orderId;
 
+    //DI - Dependency Injection`
+    ItemDAOImpl itemDAO = new ItemDAOImpl();
+    CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+    OderDAOImpl orderDAO = new OderDAOImpl();
+    OrderDetailDAOImpl orderDetailDAO = new OrderDetailDAOImpl();
+
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -177,12 +183,10 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAOImpl itemDAO = new ItemDAOImpl();
         return itemDAO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-      CustomerDAOImpl customerDAO = new CustomerDAOImpl();
       return customerDAO.existCustomer(id);
 
 
@@ -190,7 +194,6 @@ public class PlaceOrderFormController {
 
     public String generateNewOrderId() {
         try {
-            OderDAOImpl orderDAO = new OderDAOImpl();
             return orderDAO.generateNewOrderId();
 
         } catch (SQLException e) {
@@ -203,7 +206,6 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            CustomerDAOImpl customerDAO = new CustomerDAOImpl();
            ArrayList<CustomerDTO> customerDTOS = customerDAO.getAllCustomer();
            for (CustomerDTO customerDTO : customerDTOS) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
@@ -220,7 +222,6 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> itemDTOS = itemDAO.getAllItems();
             for (ItemDTO itemDTO : itemDTOS) {
                 cmbItemCode.getItems().add(itemDTO.getCode());
@@ -324,7 +325,6 @@ public class PlaceOrderFormController {
         try {
             connection=DBConnection.getDbConnection().getConnection();
             //exits order id?
-            OderDAOImpl orderDAO = new OderDAOImpl();
             boolean b1=orderDAO.existOrder(orderId);
             /*if order id already exist*/
             if (b1) {
@@ -340,7 +340,6 @@ public class PlaceOrderFormController {
             }
             //save order details
             for (OrderDetailDTO detail : orderDetails) {
-                OrderDetailDAOImpl orderDetailDAO = new OrderDetailDAOImpl();
                 boolean b3=orderDetailDAO.saveOrderDetail(detail);
 
                 if (!b3) {
@@ -354,7 +353,6 @@ public class PlaceOrderFormController {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 //update item
-                ItemDAOImpl itemDAO = new ItemDAOImpl();
                 boolean b4=itemDAO.updateItem(item);
 
                 if (!b4) {
@@ -379,7 +377,6 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
             return itemDAO.searchItem(code);
         } catch (Exception e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
