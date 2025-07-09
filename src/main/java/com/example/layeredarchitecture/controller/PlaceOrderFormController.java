@@ -321,6 +321,7 @@ public class PlaceOrderFormController {
         /*Transaction*/
         Connection connection = null;
         try {
+            connection=DBConnection.getDbConnection().getConnection();
             //exits order id?
             OderDAOImpl orderDAO = new OderDAOImpl();
             boolean b1=orderDAO.existOrder(orderId);
