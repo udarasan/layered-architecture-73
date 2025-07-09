@@ -19,7 +19,14 @@ public class OderDAOImpl {
         stm.setString(1, orderId);
         return stm.executeQuery().next();
     }
-    public void saveOrder(){}
+    public boolean saveOrder(OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)");
+        stm.setString(1, orderDTO.getOrderId());
+        stm.setDate(2, Date.valueOf(orderDTO.getOrderDate()));
+        stm.setString(3, orderDTO.getCustomerId());
+        return stm.executeUpdate()>0;
+    }
 
 
 }
