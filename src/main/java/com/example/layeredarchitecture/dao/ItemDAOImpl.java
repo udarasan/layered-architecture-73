@@ -20,7 +20,6 @@ public class ItemDAOImpl {
         return items;
 
     }
-
     public void saveItem(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
     Connection connection = DBConnection.getDbConnection().getConnection();
     PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code,description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
@@ -51,8 +50,7 @@ public class ItemDAOImpl {
         pstm.setString(1, code);
         return pstm.executeQuery().next();
         }
-
-        public String generateNewItemCode() throws SQLException, ClassNotFoundException {
+    public String generateNewItemCode() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
         if (rst.next()) {
@@ -64,6 +62,13 @@ public class ItemDAOImpl {
         }
 
         }
-        public void searchItem(){}
-
+    public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
+        pstm.setString(1, code);
+        ResultSet rst = pstm.executeQuery();
+        rst.next();
+        return new ItemDTO(code, rst.getString("description"),
+                rst.getBigDecimal("unitPrice"), rst.getInt("qtyOnHand"));
+    }
     }
