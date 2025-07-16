@@ -8,4 +8,5 @@ import java.util.ArrayList;
 
 public interface CustomerDAO extends CrudDAO<CustomerDTO> {
 
+    void customerCount() throws SQLException, ClassNotFoundException;
 }

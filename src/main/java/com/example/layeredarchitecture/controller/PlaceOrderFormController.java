@@ -112,7 +112,7 @@ public class PlaceOrderFormController {
                         }
 
                         CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-                        CustomerDTO customerDTO=customerDAO.searchCustomer(newValue+"");
+                        CustomerDTO customerDTO=customerDAO.search(newValue+"");
 
                         txtCustomerName.setText(customerDTO.getName());
                     } catch (SQLException e) {
@@ -139,7 +139,7 @@ public class PlaceOrderFormController {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
                     ItemDAOImpl itemDAO = new ItemDAOImpl();
-                    ItemDTO itemDTO=itemDAO.searchItem(newItemCode + "");
+                    ItemDTO itemDTO=itemDAO.search(newItemCode + "");
                     txtDescription.setText(itemDTO.getDescription());
                     txtUnitPrice.setText(itemDTO.getUnitPrice().setScale(2).toString());
 
@@ -183,11 +183,11 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.existItem(code);
+        return itemDAO.exist(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-      return customerDAO.existCustomer(id);
+      return customerDAO.exist(id);
 
 
     }
@@ -206,7 +206,7 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-           ArrayList<CustomerDTO> customerDTOS = customerDAO.getAllCustomer();
+           ArrayList<CustomerDTO> customerDTOS = customerDAO.getAll();
            for (CustomerDTO customerDTO : customerDTOS) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
@@ -222,7 +222,7 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> itemDTOS = itemDAO.getAllItems();
+            ArrayList<ItemDTO> itemDTOS = itemDAO.getAll();
             for (ItemDTO itemDTO : itemDTOS) {
                 cmbItemCode.getItems().add(itemDTO.getCode());
             }
@@ -353,7 +353,7 @@ public class PlaceOrderFormController {
                 item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
                 //update item
-                boolean b4=itemDAO.updateItem(item);
+                boolean b4=itemDAO.update(item);
 
                 if (!b4) {
                     connection.rollback();
@@ -377,7 +377,7 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-            return itemDAO.searchItem(code);
+            return itemDAO.search(code);
         } catch (Exception e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
         }

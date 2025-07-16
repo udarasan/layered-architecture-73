@@ -54,4 +54,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         rst.next();
         return new CustomerDTO(id + "", rst.getString("name"), rst.getString("address"));
     }
+
+    @Override
+    public void customerCount() throws SQLException, ClassNotFoundException {
+
+    }
 }
