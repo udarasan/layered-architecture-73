@@ -320,10 +320,10 @@ public class PlaceOrderFormController {
         /*Transaction*/
         Connection connection = null;
         try {
-            connection=DBConnection.getDbConnection().getConnection();
+/*            connection=DBConnection.getDbConnection().getConnection();
             //exits order id?
             boolean b1=orderDAO.existOrder(orderId);
-            /*if order id already exist*/
+            *//*if order id already exist*//*
             if (b1) {
                 return false;
             }
@@ -361,7 +361,7 @@ public class PlaceOrderFormController {
 
             connection.commit();
             connection.setAutoCommit(true);
-            return true;
+            return true;*/
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
