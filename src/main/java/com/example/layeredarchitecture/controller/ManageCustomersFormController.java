@@ -1,7 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.custom.CustomerDAO;
-import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
+import com.example.layeredarchitecture.bo.custom.CustomerBO;
+import com.example.layeredarchitecture.bo.custom.impl.CustomerBOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.jfoenix.controls.JFXButton;
@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,7 +39,7 @@ public class ManageCustomersFormController {
     public JFXButton btnAddNewCustomer;
 
     //DI - Dependency Injection
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -74,7 +73,7 @@ public class ManageCustomersFormController {
         /*Get all customers*/
         try {
             //tight coupling
-            ArrayList<CustomerDTO> allCustomer=customerDAO.getAll();
+            ArrayList<CustomerDTO> allCustomer=customerBO.getAllCustomer();
             for (CustomerDTO customerDTO : allCustomer) {
                 tblCustomers.getItems().add(
                         new CustomerTM(
