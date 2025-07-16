@@ -191,7 +191,7 @@ public class PlaceOrderFormController {
 
     public String generateNewOrderId() {
         try {
-            return orderDAO.generateNewOrderId();
+            return placeOrderBO.generateOrderId();
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -203,7 +203,7 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-           ArrayList<CustomerDTO> customerDTOS = customerDAO.getAll();
+           ArrayList<CustomerDTO> customerDTOS = placeOrderBO.getAllCustomer();
            for (CustomerDTO customerDTO : customerDTOS) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
@@ -219,7 +219,7 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> itemDTOS = itemDAO.getAll();
+            ArrayList<ItemDTO> itemDTOS = placeOrderBO.getAllItem();
             for (ItemDTO itemDTO : itemDTOS) {
                 cmbItemCode.getItems().add(itemDTO.getCode());
             }
