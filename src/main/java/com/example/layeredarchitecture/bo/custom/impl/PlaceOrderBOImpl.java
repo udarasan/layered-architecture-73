@@ -22,4 +22,14 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     public ItemDTO searchItem(String id) throws SQLException, ClassNotFoundException {
         return itemDAO.search(id);
     }
+
+    @Override
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.exist(id);
+    }
+
+    @Override
+    public boolean existItem(String id) throws SQLException, ClassNotFoundException {
+        return itemDAO.exist(id);
+    }
 }

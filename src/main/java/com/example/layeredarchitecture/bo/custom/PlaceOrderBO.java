@@ -8,4 +8,6 @@ import java.sql.SQLException;
 public interface PlaceOrderBO {
     CustomerDTO searchCustomer(String id) throws SQLException,ClassNotFoundException;
     ItemDTO searchItem(String id) throws SQLException,ClassNotFoundException;
+    boolean existCustomer(String id) throws SQLException, ClassNotFoundException;
+    boolean existItem(String id) throws SQLException, ClassNotFoundException;
 }
