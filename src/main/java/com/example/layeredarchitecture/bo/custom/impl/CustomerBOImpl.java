@@ -13,6 +13,12 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
+        //business logic
         return customerDAO.getAll();
+    }
+
+    @Override
+    public Boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return customerDAO.save(customerDTO);
     }
 }
