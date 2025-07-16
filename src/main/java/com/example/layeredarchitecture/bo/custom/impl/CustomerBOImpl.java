@@ -18,7 +18,27 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public Boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         return customerDAO.save(customerDTO);
+    }
+
+    @Override
+    public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return customerDAO.update(customerDTO);
+    }
+
+    @Override
+    public boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.exist(id);
+    }
+
+    @Override
+    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(id);
+    }
+
+    @Override
+    public String generateNewCustomerId() throws SQLException, ClassNotFoundException {
+        return customerDAO.generateNewId();
     }
 }
