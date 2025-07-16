@@ -317,52 +317,8 @@ public class PlaceOrderFormController {
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        /*Transaction*/
-        Connection connection = null;
         try {
-/*            connection=DBConnection.getDbConnection().getConnection();
-            //exits order id?
-            boolean b1=orderDAO.existOrder(orderId);
-            *//*if order id already exist*//*
-            if (b1) {
-                return false;
-            }
-            connection.setAutoCommit(false);
-            boolean b2=orderDAO.saveOrder(new OrderDTO(orderId,orderDate,customerId));
-            //save oder
-            if (!b2) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
-            //save order details
-            for (OrderDetailDTO detail : orderDetails) {
-                boolean b3=orderDetailDAO.saveOrderDetail(detail);
-
-                if (!b3) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-
-                  //Search & Update Item
-                ItemDTO item = findItem(detail.getItemCode());
-                item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
-
-                //update item
-                boolean b4=itemDAO.update(item);
-
-                if (!b4) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;*/
-
+            return placeOrderBO.placeOrder(orderId, orderDate, customerId, orderDetails);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -370,15 +326,4 @@ public class PlaceOrderFormController {
         }
         return false;
     }
-
-
-    public ItemDTO findItem(String code) {
-        try {
-            return itemDAO.search(code);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to find the Item " + code, e);
-        }
-    }
-
-
 }

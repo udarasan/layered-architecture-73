@@ -110,4 +110,17 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         connection.setAutoCommit(true);
         return true;
     }
+
+    @Override
+    public ItemDTO findItem(String id) throws SQLException, ClassNotFoundException {
+        try {
+            return itemDAO.search(id);
+        }catch (SQLException e){
+            throw new RuntimeException("failed to find item" + id,e);
+        }catch (Exception e){
+           e.printStackTrace();
+        }
+
+        return null;
+    }
 }

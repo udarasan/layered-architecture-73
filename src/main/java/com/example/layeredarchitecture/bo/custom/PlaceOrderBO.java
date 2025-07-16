@@ -19,4 +19,5 @@ public interface PlaceOrderBO {
     ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException;
     ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
     boolean placeOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException;
+    ItemDTO findItem(String id) throws SQLException, ClassNotFoundException;
 }
