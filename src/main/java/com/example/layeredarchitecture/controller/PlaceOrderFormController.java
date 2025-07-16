@@ -136,8 +136,7 @@ public class PlaceOrderFormController {
                     if (!existItem(newItemCode + "")) {
 //                        throw new NotFoundException("There is no such item associated with the id " + code);
                     }
-                    ItemDAOImpl itemDAO = new ItemDAOImpl();
-                    ItemDTO itemDTO=itemDAO.search(newItemCode + "");
+                    ItemDTO itemDTO=placeOrderBO.searchItem(newItemCode + "");
                     txtDescription.setText(itemDTO.getDescription());
                     txtUnitPrice.setText(itemDTO.getUnitPrice().setScale(2).toString());
 
