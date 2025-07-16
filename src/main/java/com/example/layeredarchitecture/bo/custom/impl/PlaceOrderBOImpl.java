@@ -25,7 +25,7 @@ import java.util.List;
 public class PlaceOrderBOImpl implements PlaceOrderBO {
     CustomerDAO customerDAO = new CustomerDAOImpl();
     ItemDAO itemDAO = new ItemDAOImpl();
-    OrderDAO orderDAO=new OderDAOImpl();
+    OrderDAO orderDAO= new OderDAOImpl();
     OrderDetailDAO orderDetailDAO=new OrderDetailDAOImpl();
 
 

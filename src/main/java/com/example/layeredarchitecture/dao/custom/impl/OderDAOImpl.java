@@ -6,6 +6,7 @@ import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.OrderDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OderDAOImpl implements OrderDAO {
     @Override
@@ -23,4 +24,38 @@ public class OderDAOImpl implements OrderDAO {
     }
 
 
+    @Override
+    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+        return null;
+    }
+
+    @Override
+    public boolean save(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDTO customerDTO) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean exist(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+        return false;
+    }
+
+    @Override
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        return "";
+    }
+
+    @Override
+    public OrderDTO search(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }
