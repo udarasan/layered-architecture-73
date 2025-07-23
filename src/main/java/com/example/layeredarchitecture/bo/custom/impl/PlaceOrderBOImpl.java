@@ -11,6 +11,8 @@ import com.example.layeredarchitecture.dto.CustomerDTO;
 import com.example.layeredarchitecture.dto.ItemDTO;
 import com.example.layeredarchitecture.dto.OrderDTO;
 import com.example.layeredarchitecture.dto.OrderDetailDTO;
+import com.example.layeredarchitecture.entity.Customer;
+import com.example.layeredarchitecture.entity.Item;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,12 +30,15 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.search(id);
+        Customer entity=customerDAO.search(id);
+        return new CustomerDTO(entity.getId(),entity.getName(),entity.getName());
     }
 
     @Override
     public ItemDTO searchItem(String id) throws SQLException, ClassNotFoundException {
-        return itemDAO.search(id);
+        Item entity=itemDAO.search(id);
+        return new ItemDTO(entity.getCode(),entity.getDescription(),
+                entity.getUnitPrice(),entity.getQtyOnHand());
     }
 
     @Override
@@ -53,12 +58,24 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     @Override
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
-        return customerDAO.getAll();
+        ArrayList<Customer> customers=customerDAO.getAll();
+        ArrayList<CustomerDTO> customerDTOs=new ArrayList<>();
+        for(Customer customer:customers){
+            customerDTOs.add(new CustomerDTO(customer.getId(),customer.getName(),customer.getName()));
+        }
+        return customerDTOs;
     }
 
     @Override
     public ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
-        return itemDAO.getAll();
+        ArrayList<Item>items=itemDAO.getAll();
+        ArrayList<ItemDTO> itemDTOs=new ArrayList<>();
+        for(Item item:items){
+            itemDTOs.add(new ItemDTO(
+                    item.getCode(),item.getDescription(),item.getUnitPrice(),
+                    item.getQtyOnHand()));
+        }
+        return itemDTOs;
     }
 
     @Override
