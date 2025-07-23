@@ -52,7 +52,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
 
     @Override
     public String generateOrderId() throws SQLException, ClassNotFoundException {
-        return orderDAO.generateNewOrderId();
+        return orderDAO.generateNewId();
     }
 
     @Override
@@ -70,13 +70,13 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         Connection connection = null;
         connection= DBConnection.getDbConnection().getConnection();
         //exits order id?
-        boolean b1=orderDAO.existOrder(orderId);
+        boolean b1=orderDAO.exist(orderId);
         /*if order id already exist*/
         if (b1) {
             return false;
         }
         connection.setAutoCommit(false);
-        boolean b2=orderDAO.saveOrder(new OrderDTO(orderId,orderDate,customerId));
+        boolean b2=orderDAO.save(new OrderDTO(orderId,orderDate,customerId));
         //save oder
         if (!b2) {
             connection.rollback();
@@ -85,7 +85,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         }
         //save order details
         for (OrderDetailDTO detail : orderDetails) {
-            boolean b3=orderDetailDAO.saveOrderDetail(detail);
+            boolean b3=orderDetailDAO.save(detail);
 
             if (!b3) {
                 connection.rollback();

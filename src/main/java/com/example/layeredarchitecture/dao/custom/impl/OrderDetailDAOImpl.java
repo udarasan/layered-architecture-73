@@ -8,11 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
-    @Override
-    public boolean saveOrderDetail(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException {
-        return SQLUtil.executeUpdate( "INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)"
-                ,orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getUnitPrice(),orderDetailDTO.getQty());
-    }
 
     @Override
     public ArrayList<OrderDetailDTO> getAll() throws SQLException, ClassNotFoundException {
@@ -20,8 +15,10 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public boolean save(OrderDetailDTO customerDTO) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean save(OrderDetailDTO orderDetailDTO) throws SQLException, ClassNotFoundException {
+        return SQLUtil.executeUpdate( "INSERT INTO OrderDetails (oid, itemCode, unitPrice, qty) VALUES (?,?,?,?)"
+                ,orderDetailDTO.getOid(),orderDetailDTO.getItemCode(),orderDetailDTO.getUnitPrice(),orderDetailDTO.getQty());
+
     }
 
     @Override
