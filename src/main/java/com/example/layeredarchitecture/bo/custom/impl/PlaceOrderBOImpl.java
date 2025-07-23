@@ -13,6 +13,8 @@ import com.example.layeredarchitecture.dto.OrderDTO;
 import com.example.layeredarchitecture.dto.OrderDetailDTO;
 import com.example.layeredarchitecture.entity.Customer;
 import com.example.layeredarchitecture.entity.Item;
+import com.example.layeredarchitecture.entity.Order;
+import com.example.layeredarchitecture.entity.OrderDetail;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -89,7 +91,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             return false;
         }
         connection.setAutoCommit(false);
-        boolean b2=orderDAO.save(new OrderDTO(orderId,orderDate,customerId));
+        boolean b2=orderDAO.save(new Order(orderId,orderDate,customerId));
         //save oder
         if (!b2) {
             connection.rollback();
@@ -98,7 +100,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
         }
         //save order details
         for (OrderDetailDTO detail : orderDetails) {
-            boolean b3=orderDetailDAO.save(detail);
+            boolean b3=orderDetailDAO.save(new OrderDetail(detail.getOid(),detail.getItemCode(),detail.getQty(),detail.getUnitPrice()));
 
             if (!b3) {
                 connection.rollback();
@@ -111,7 +113,7 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
             item.setQtyOnHand(item.getQtyOnHand() - detail.getQty());
 
             //update item
-            boolean b4=itemDAO.update(item);
+            boolean b4=itemDAO.update(new Item(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
 
             if (!b4) {
                 connection.rollback();
@@ -128,7 +130,8 @@ public class PlaceOrderBOImpl implements PlaceOrderBO {
     @Override
     public ItemDTO findItem(String id) throws SQLException, ClassNotFoundException {
         try {
-            return itemDAO.search(id);
+            Item item=itemDAO.search(id);
+            return new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand());
         }catch (SQLException e){
             throw new RuntimeException("failed to find item" + id,e);
         }catch (Exception e){
